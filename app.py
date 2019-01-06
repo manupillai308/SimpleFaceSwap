@@ -4,6 +4,7 @@ import cv2
 detector = MTCNN()
 
 cap = cv2.VideoCapture(0)
+out = cv2.VideoWriter('../output.mp4', -1, 10.0, (640,480))
 while cap.isOpened():
 	ret, frame = cap.read()
 	if ret == True:
@@ -22,10 +23,12 @@ while cap.isOpened():
 				frame[cropped_images[0][1][1]:cropped_images[0][1][1]+cropped_images[0][1][3], cropped_images[0][1][0]:cropped_images[0][1][0]+cropped_images[0][1][2]] = im2
 				frame[cropped_images[1][1][1]:cropped_images[1][1][1]+cropped_images[1][1][3], cropped_images[1][1][0]:cropped_images[1][1][0]+cropped_images[1][1][2]] = im1
 		cv2.imshow('Image', frame)
+		out.write(frame)
 		if cv2.waitKey(1) & 0xFF == ord('q'):
 			break
 	else:
 		break
 		
 cap.release()
+out.release()
 cv2.destroyAllWindows()
